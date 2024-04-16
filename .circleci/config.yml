@@ -12,7 +12,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 24.0.7
+          version: 20.10.18
       - run:
           name: Setup environment variable
           command: |
