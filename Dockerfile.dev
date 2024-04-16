@@ -1,0 +1,19 @@
+FROM ruby:3.2.0
+
+WORKDIR /myapp
+
+RUN apt-get update \
+  && apt-get install \
+    openssl \
+  && wget https://dev.mysql.com/get/mysql-apt-config_0.8.22-1_all.deb \
+  && DEBIAN_FRONTEND=noninteractive dpkg -i mysql-apt-config_0.8.22-1_all.deb \
+  && apt-get update --allow-insecure-repositories \
+  && apt-get clean
+
+COPY Gemfile Gemfile.lock ./
+
+RUN bundle install
+
+COPY . .
+
+ENTRYPOINT ["rails", "server", "-b", "0.0.0.0"]
