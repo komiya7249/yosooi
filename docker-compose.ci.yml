@@ -14,7 +14,7 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.ci
     depends_on:
       - mysql
     networks:
