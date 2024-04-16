@@ -21,6 +21,10 @@ services:
       - mysql
     networks:
       - default 
+    volumes:
+    - .:/myapp2
+    - /myapp2/log
+    - /myapp2/tmp
     ports:
       - '3000:3000'
     tty: true

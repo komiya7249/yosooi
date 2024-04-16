@@ -12,7 +12,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker:
-          version: 20.10.14
+          version: 24.0.7
       - run:
           name: Setup environment variable
           command: |
@@ -22,7 +22,7 @@ jobs:
           command: |
             set -x
             docker-compose up -d
-            docker-compose run --rm web curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
+            docker-compose run web curl -4 --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
       - run:
             name: Run rspec
             command: docker-compose exec web rspec
