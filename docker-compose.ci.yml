@@ -17,9 +17,8 @@ services:
       dockerfile: Dockerfile.ci
     depends_on:
       - mysql
-    networks:
-      - default 
     ports:
       - '3000:3000'
-    tty: true
-    stdin_open: true
+   networks:
+      - default
+    command: bundle exec rails server -b 0.0.0.0
