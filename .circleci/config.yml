@@ -40,7 +40,7 @@ jobs:
           name: Install Heroku CLI
           command: |
             curl https://cli-assets.heroku.com/install.sh | sh
-        run:
+      - run:
           name: Authenticate Heroku CLI
           command: heroku login -i
       - run:
