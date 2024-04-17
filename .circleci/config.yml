@@ -25,6 +25,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install dependencies
+          command: bundle install
+      - run:
           name: Run RuboCop
           command: bundle exec rubocop --require rubocop-airbnb
 
