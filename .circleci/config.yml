@@ -10,14 +10,14 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Install dependencies
-        command: bundle install
+          name: Install dependencies
+          command: bundle install
       - run:
-        name: Start Rails server for testing
-        command: bundle exec rails server -p $PORT -e test &
+          name: Start Rails server for testing
+          command: bundle exec rails server -p $PORT -e test &
       - run:
-        name: Run RSpec
-        command: bundle exec rspec
+          name: Run RSpec
+          command: bundle exec rspec
 
   rubocop:
     docker:
@@ -25,8 +25,8 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Run RuboCop
-        command: bundle exec rubocop --require rubocop-airbnb
+          name: Run RuboCop
+          command: bundle exec rubocop --require rubocop-airbnb
 
   heroku_deploy:
     executor: heroku/default
