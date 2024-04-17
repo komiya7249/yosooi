@@ -5,48 +5,30 @@ orbs:
 
 jobs:
   rspec:
-    working_directory: ~/myapp2
     docker:
       - image: cimg/ruby:3.2.0
-    resource_class: small
     steps:
       - checkout
-      - setup_remote_docker:
-          version: 20.10.18
       - run:
-          name: Setup environment variable
-          command: |
-            echo "export COMPOSE_FILE=docker-compose.ci.yml" >> $BASH_ENV
+        name: Install dependencies
+        command: bundle install
       - run:
-            name: Run rspec
-            command: bundle exec rspec
+        name: Start Rails server for testing
+        command: bundle exec rails server -p $PORT -e test &
+      - run:
+        name: Run RSpec
+        command: bundle exec rspec
 
   rubocop:
-    working_directory: ~/myapp2
     docker:
       - image: cimg/ruby:3.2.0
-    resource_class: small
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - gemfiles-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-            - gemfiles-{{ .Branch }}-
-            - gemfiles-master-
-      - run: bundle config --local path vendor/bundle
       - run:
-          name: bundle install
-          command: bundle check || bundle install --jobs=8 --clean
-      - run:
-          name: Run rubocop
-          command: bundle exec rubocop --parallel
-      - save_cache:
-          key: gemfiles-{{ .Branch }}-{{ checksum "Gemfile.lock" }}
-          paths:
-            - vendor/bundle
+        name: Run RuboCop
+        command: bundle exec rubocop --require rubocop-airbnb
 
   heroku_deploy:
-    working_directory: ~/myapp2
     executor: heroku/default
     resource_class: small
     steps:
